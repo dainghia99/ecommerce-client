@@ -9,13 +9,14 @@ interface MainNavProps {
   data: Category[];
 }
 
-const MainNav: React.FC<MainNavProps> = ({ data }) => {
-  const usePathName = usePathname();
+export const revalidate = 0;
 
+const MainNav: React.FC<MainNavProps> = ({ data }) => {
+  const pathName = usePathname();
   const routes = data.map((route) => ({
     href: `/category/${route.id}`,
     label: route.name,
-    active: usePathName === `/category/${route.id}`,
+    active: pathName === `/category/${route.id}`,
   }));
 
   return (
@@ -23,8 +24,8 @@ const MainNav: React.FC<MainNavProps> = ({ data }) => {
       {routes.map((route) => (
         <Link
           className={cn(
-            "cursor-pointer opacity-70",
-            route.active ? " text-black" : " hover:opacity-100"
+            "cursor-pointer text-neutral-500 hover:text-black",
+            route.active ? " text-black" : ""
           )}
           key={route.href}
           href={route.href}

@@ -5,6 +5,7 @@ import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { ClerkProvider } from "@clerk/nextjs";
 import { viVN } from "@clerk/localizations";
+import ModalProvider from "@/providers/modal-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -24,6 +25,7 @@ export default function RootLayout({
     <ClerkProvider localization={viVN}>
       <html lang="en">
         <body className={inter.className}>
+          <ModalProvider />
           <Header />
           {children}
           <Footer />
