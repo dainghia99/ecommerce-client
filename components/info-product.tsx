@@ -1,13 +1,17 @@
+"use client";
+
 import { formatter } from "@/lib/utils";
 import { Product } from "@/types";
 import { Button } from "./ui/button";
 import { ShoppingCart } from "lucide-react";
+import useCartStore from "@/hooks/use-cart";
 
 interface InfiProductProps {
   data: Product;
 }
 
 const InfiProduct: React.FC<InfiProductProps> = ({ data }) => {
+  const cart = useCartStore();
   return (
     <div>
       <h3 className="font-bold text-xl pt-10">{data.name}</h3>
@@ -26,7 +30,12 @@ const InfiProduct: React.FC<InfiProductProps> = ({ data }) => {
       <div className="font-bold text-xl">
         {formatter.format(Number(data.price))}
       </div>
-      <Button type="button" size="lg" className="mt-6">
+      <Button
+        onClick={() => cart.addItem(data)}
+        type="button"
+        size="lg"
+        className="mt-6"
+      >
         Thêm vào giỏ hàng
         <ShoppingCart className="w-5 h-5 ml-2" />
       </Button>

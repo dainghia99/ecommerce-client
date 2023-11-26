@@ -8,12 +8,14 @@ import { formatter } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { MouseEventHandler } from "react";
 import usePriviewModalStore from "@/hooks/use-preview-modal";
+import useCartStore from "@/hooks/use-cart";
 
 interface ProductCardProps {
   data: Product;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
+  const cart = useCartStore();
   const previewModal = usePriviewModalStore();
   const router = useRouter();
 
@@ -47,7 +49,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
               icon={<Expand size={20} className="text-gray-600 z-50" />}
             />
             <IconButton
-              onClick={() => {}}
+              onClick={() => cart.addItem(data)}
               icon={<ShoppingCart size={20} className="text-gray-600 z-50" />}
             />
           </div>
