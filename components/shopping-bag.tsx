@@ -2,12 +2,15 @@
 
 import useCartStore from "@/hooks/use-cart";
 import { ShoppingCart } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const ShoppingBag = () => {
   const cart = useCartStore();
+  const router = useRouter();
   return (
     <div className="flex items-center">
       <button
+        onClick={() => router.push("/cart")}
         type="button"
         className="rounded-full w-8 h-8 flex items-center justify-center bg-neutral-800 relative"
       >
