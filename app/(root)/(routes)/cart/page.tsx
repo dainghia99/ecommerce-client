@@ -3,9 +3,19 @@
 import CartItem from "@/components/cart-item";
 import useCartStore from "@/hooks/use-cart";
 import CheckoutForm from "./components/check-out-form";
+import { useEffect, useState } from "react";
 
 const CartPage = () => {
+  const [isMounted, setIsMounted] = useState(false);
   const cart = useCartStore();
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <>

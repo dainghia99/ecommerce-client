@@ -1,22 +1,22 @@
 "use client";
 
-// Import các thành phần và thư viện cần sử dụng
-import { Button } from "@/components/ui/button"; // Import Button từ thư mục components/ui/button
-import useCartStore from "@/hooks/use-cart"; // Sử dụng custom hook useCartStore từ thư mục hooks/use-cart
-import { formatter } from "@/lib/utils"; // Import hàm formatter từ thư mục lib/utils
-import axios from "axios"; // Import thư viện axios để thực hiện HTTP requests
-import { useSearchParams } from "next/navigation"; // Import hook useSearchParams từ thư viện next/navigation
-import { useEffect } from "react"; // Import hook useEffect từ thư viện react
-import toast from "react-hot-toast"; // Import thư viện toast từ react-hot-toast
+import { Button } from "@/components/ui/button";
+import useCartStore from "@/hooks/use-cart";
+import { formatter } from "@/lib/utils";
+import { auth } from "@clerk/nextjs";
+import axios from "axios";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+
+export const revalidate = 0;
 
 // Khai báo component CheckoutForm
 const CheckoutForm = () => {
-  // Sử dụng custom hook để lấy thông tin giỏ hàng
+  const router = useRouter();
   const cart = useCartStore();
-  // Sử dụng hook useSearchParams để lấy thông tin từ URL query parameters
   const searchParams = useSearchParams();
 
-  // Sử dụng useEffect để xử lý khi component được mount hoặc có sự thay đổi trong searchParams và cart.removeAllItems
   useEffect(() => {
     // Kiểm tra nếu có query parameter "success", hiển thị thông báo thanh toán thành công và xóa tất cả sản phẩm trong giỏ hàng
     if (searchParams.get("success")) {
@@ -39,6 +39,10 @@ const CheckoutForm = () => {
   // Xử lý khi người dùng click nút "Thanh toán"
   const onCheckout = async () => {
     // Gửi POST request đến API để thực hiện thanh toán
+    const { userId } = auth();
+
+    console.log(userId);
+
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
       {
@@ -62,7 +66,11 @@ const CheckoutForm = () => {
           {formatter.format(total)}
         </div>
       </div>
-      <Button onClick={onCheckout} className=" w-full mt-6">
+      <Button
+        disabled={cart.items.length === 0}
+        onClick={onCheckout}
+        className=" w-full mt-6"
+      >
         Thanh toán
       </Button>
     </div>
