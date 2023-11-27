@@ -29,6 +29,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
     previewModal.onOpen(data);
   };
 
+  const onAddToCard: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.stopPropagation();
+
+    cart.addItem(data);
+  };
+
   return (
     <div
       onClick={handleClick}
@@ -49,7 +55,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
               icon={<Expand size={20} className="text-gray-600 z-50" />}
             />
             <IconButton
-              onClick={() => cart.addItem(data)}
+              onClick={onAddToCard}
               icon={<ShoppingCart size={20} className="text-gray-600 z-50" />}
             />
           </div>

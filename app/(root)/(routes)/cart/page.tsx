@@ -2,6 +2,7 @@
 
 import CartItem from "@/components/cart-item";
 import useCartStore from "@/hooks/use-cart";
+import CheckoutForm from "./components/check-out-form";
 
 const CartPage = () => {
   const cart = useCartStore();
@@ -23,6 +24,7 @@ const CartPage = () => {
                   ))}
                 </ul>
               </div>
+              <CheckoutForm />
             </div>
           </div>
         </div>
