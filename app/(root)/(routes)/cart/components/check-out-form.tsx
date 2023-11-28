@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import useCartStore from "@/hooks/use-cart";
 import { formatter } from "@/lib/utils";
-import { auth } from "@clerk/nextjs";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -39,9 +38,6 @@ const CheckoutForm = () => {
   // Xử lý khi người dùng click nút "Thanh toán"
   const onCheckout = async () => {
     // Gửi POST request đến API để thực hiện thanh toán
-    const { userId } = auth();
-
-    console.log(userId);
 
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
